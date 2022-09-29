@@ -16,6 +16,11 @@ import json
 
 logger = logging.getLogger(__name__)
 
+def base(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'djangoapp/base.html', context)
+
 def index(request):
     context = {}
     if request.method == "GET":
@@ -32,7 +37,6 @@ def contact(request):
         return render(request, 'djangoapp/contact.html', context)
 
 def login_request(request):
-    context = {}
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['psw']

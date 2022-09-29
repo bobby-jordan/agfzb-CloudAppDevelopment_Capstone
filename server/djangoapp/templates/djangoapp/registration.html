@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
     <body>
-        <form action="{% url 'djangoapp:login' %}" method="post">
+        <form action="{% url 'djangoapp:registration' %}" method="post">
             {% csrf_token %}
             <div class="container"> <!--Style root div with .container class -->
               <h1>Sign Up</h1>
@@ -25,7 +25,7 @@
                   {{ message }}
                 </div>
               {% endif %}
-              <button class="btn btn-primary" type="submit">Login</button> <!--Style button with .btn and .btn-primary class -->
+              <button class="btn btn-primary" type="submit">Sign up</button> <!--Style button with .btn and .btn-primary class -->
             </div>
           </form>
     </body>
