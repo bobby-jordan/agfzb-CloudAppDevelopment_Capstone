@@ -2,63 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    {% load static %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-
+    <title>Dealership Review</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 </head>
 <body>
-<div class="container-fluid">
-    <h3>Add a review about <b>{{dealer.full_name}}</b></h3>
-    <form action="{% url 'djangoapp:add_review' dealer.id%}" method="post">
-        <div class="form-group">
+    <div class="container-fluid">
+        <h3>Add a review about <b>{{dealer.full_name}}</b></h3>
+        <form action="{% url 'djangoapp:add_review' dealer.id%}" method="post">
+            <div class="form-group">
 
-              <div class="mb-3">
-                  <label for="content"><b>Enter the review content: </b></label>
-                  <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
-              </div>
+                <div class="mb-3">
+                    <label for="content"><b>Enter the review content: </b></label>
+                    <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+                </div>
 
-              <div class="form-check">
-                  <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
-                  <label class="form-check-label" for="purchasecheck">
-                      Has purchased the car from {{dealer.full_name}} ?
-                  </label>
-                  <label class="text-muted">(select purchased car information below if checked)</label>
-              </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                    <label class="form-check-label" for="purchasecheck">
+                        Has purchased the car from {{dealer.full_name}} ?
+                    </label>
+                    <label class="text-muted">(select purchased car information below if checked)</label>
+                </div>
 
-              <div class="mb-3">
-                  <label for="car"><b>Select your car (model-make-year):</b></label>
-                  <select name="car" id="car" class="form-select" required>
-                      {% for car in cars %}
-                      <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
-                      {% endfor %}
-                  </select>
-              </div>
+                <div class="mb-3">
+                    <label for="car"><b>Select your car (model-make-year):</b></label>
+                    <select name="car" id="car" class="form-select" required>
+                        {% for car in cars %}
+                        <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-              <div class="mb-3">
-                  <label for="purchasedate"><b>Select Your Purchase Date: </b></label>
-                  <input class="date-own form-control" style="width: 300px;" type="text" name="purchasedate" id="purchasedate">
-              </div>
+                <div class="mb-3">
+                    <label for="purchasedate"><b>Select Your Purchase Date: </b></label>
+                    <input class="date-own form-control" style="width: 300px;" type="text" name="purchasedate" id="purchasedate">
+                </div>
 
+            </div>
+            {% csrf_token %}
+            <div>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+    <footer class="bg-dark text-center text-lg-start">
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            <a href="{% url 'djangoapp:about' %}">About us</a> </br>
+            <a href="{% url 'djangoapp:contact' %}">Contact Us</a> </br>
+            <p class="btn btn-light"> © 2022 Copyright: Borislava Yordanova </p> </br>
         </div>
-        {% csrf_token %}
-        <div>
-            <button class="btn btn-primary" type="submit">Submit</button>
-        </div>
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-warning" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    </form>
-</div>
+        <!-- Copyright -->
+    </footer>    
 </body>
-
-<script type="text/javascript">
-      $('.date-own').datepicker({
-         format: 'mm/dd/yyyy'
-       });
- </script>
+</html>
